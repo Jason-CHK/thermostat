@@ -3,7 +3,7 @@
  * All thermostat logic is handled in the Thermostat class.
  */
 
-#include "src/thermostat.h"
+#include "thermostat.h"
 
 #define BUTTON_UP_PIN 20
 #define BUTTON_DN_PIN 3
