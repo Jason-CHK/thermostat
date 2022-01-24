@@ -2,7 +2,7 @@
 
 An Arduino-based thermostat using IR remote to control a heater.
 
-![](docs/photo.png)
+![](docs/photo.jpg)
 
 ## Parts
 
