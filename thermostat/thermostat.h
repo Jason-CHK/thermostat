@@ -17,7 +17,7 @@
  * Maximum allowed Fahrenheit degree difference between set temperature and heat
  * index before toggling the heater.
  */
-#define MAX_TEMP_DIFF_F 1
+#define MAX_TEMP_DIFF_F 0.5
 
 /**
  * Fahrenheit change for each button press.

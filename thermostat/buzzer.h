@@ -4,7 +4,7 @@
 #include "Arduino.h"
 
 // Controls volume of the buzzer. Choose from [0, 255].
-#define BUZZER_PWM_DUTY_CYCLE 100
+#define BUZZER_PWM_DUTY_CYCLE 255
 
 /**
  * Wrapper of an active buzzer. PWM is used to reduce buzzer volume. No resistor

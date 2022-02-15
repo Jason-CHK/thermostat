@@ -62,7 +62,6 @@ void Thermostat::loop() {
        measurement_.heat_idx_F < set_temp_F_ - MAX_TEMP_DIFF_F)) {
     heater_on_ = !heater_on_;
     toggle_heater = true;
-    buzzer_.set_time(BUZZER_ON_MS);
     digitalWrite(heater_indicator_pin_, heater_on_ ? HIGH : LOW);
     update = true;
   }
@@ -71,7 +70,10 @@ void Thermostat::loop() {
   }
 
   // Perform time consuming steps.
-  if (toggle_heater) heater_.toggle();
+  if (toggle_heater) {
+    heater_.toggle();
+    buzzer_.set_time(BUZZER_ON_MS);
+  }
   thermometer_.loop();
 }
 
