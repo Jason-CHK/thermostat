@@ -26,11 +26,6 @@
 #define SET_TEMP_STEP_F 0.5
 
 /**
- * Battery voltage doesn't change quickly.
- */
-#define BATTERY_POLL_INTERVAL_MS 5000
-
-/**
  * 10k resistor between Vin and battery pin.
  */
 #define BATTERY_VIN_PIN_OHM 10000
@@ -39,6 +34,11 @@
  * 5.1k resistor between battery pin and ground.
  */
 #define BATTERY_PIN_GND_OHM 5100
+
+/**
+ * Battery voltage doesn't change quickly.
+ */
+#define BATTERY_POLL_INTERVAL_MS 10000
 
 /**
  * Debounce detection window for buttons. The lower this is, the more responsive
@@ -76,6 +76,7 @@ class Thermostat {
   bool heater_on_;
   float set_temp_F_;
   Thermometer::Measurement measurement_;
+  float voltage_;
 
   Battery battery_;
   Button button_up_;

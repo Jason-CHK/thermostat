@@ -92,14 +92,18 @@ void Display::displayStatus(Status status) {
   x = OLED_WIDTH - calcTempWidth(status.max_diff_C, status.max_diff_F);
   placeTemp(x, y, status.max_diff_C, status.max_diff_F);
 
-  // Row 7 - Empty.
+  // Row 7 - Battery voltage.
   x = 0;
   y += OLED_TEXT_1_HEIGHT;
+  placeText(x, y, "Battery:");
+  String batteryStr = String(status.battery_V, 2);
+  x = OLED_WIDTH - OLED_TEXT_1_WIDTH * (batteryStr.length() + 1);
+  placeText(x, y, batteryStr);
+  placeText(x, y, "V");
 
-  // Row 8 - Tracking heat index.
-  x = 2 * OLED_TEXT_1_WIDTH;
+  // Row 8 - Empty.
+  x = 0;
   y += OLED_TEXT_1_HEIGHT;
-  placeText(x, y, "Tracking heat idx");
 
   display_.display();
 }

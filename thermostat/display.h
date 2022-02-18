@@ -29,6 +29,7 @@ class Display {
     float heat_idx_F;
     float max_diff_C;
     float max_diff_F;
+    float battery_V;
   } Status;
 
   /**
@@ -65,8 +66,8 @@ class Display {
    * |Room temp:30.5C/60.0F|
    * |Humidity:      20.00%|  blue zone
    * |Max diff:   1.0C/1.0F|
+   * |Battery:        4.96V|
    * |                     |
-   * |  Tracking heat idx  |
    * -----------------------
    */
   void displayStatus(Status status);

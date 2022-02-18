@@ -3,15 +3,17 @@
 
 #include "Arduino.h"
 
-// 5k1, 10k
+// Exponential smoothing factor. Should fall in range (0, 1].
+//
+// 1 - No smoothing
+// 0 - Not changing
+#define SMOOTHING_FACTOR 0.1
 
-/**
- * Define operating voltage based on board type. Add unsupported board types
- * here.
- *
- * Board type can be found in boards.txt, with key xxx.build.board where xxx is
- * the board model.
- */
+// Define operating voltage based on board type. Add unsupported board types
+// here.
+//
+// Board type can be found in boards.txt, with key xxx.build.board where xxx is
+// the board model.
 #if defined(ARDUINO_AVR_NANO_EVERY)
 #define OPERATING_VOLTAGE 5
 #elif defined(ARDUINO_SAMD_NANO_33_IOT)
@@ -44,7 +46,13 @@ class Battery {
   void begin();
 
   /**
-   * Get a reading of battery voltage Vin. This might be cached.
+   * Call this in the main loop.
+   */
+  void loop();
+
+  /**
+   * Get the latest reading of battery voltage Vin. Repeating calls to voltage
+   * before next loop will get the same result.
    *
    * @return float Voltage of Vin.
    */
@@ -59,6 +67,8 @@ class Battery {
   /**
    * Cached multiplier. Multiply pin reading with this to calculate final
    * voltage.
+   *
+   * multiplier = operating voltage / 1024 * (R1 + R2) / R2
    */
   float multiplier_;
 };

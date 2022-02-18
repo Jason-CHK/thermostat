@@ -21,7 +21,7 @@ void Thermostat::begin() {
   display_.begin();
   heater_.begin();
   thermometer_.begin();
-  
+
   pinMode(heater_indicator_pin_, OUTPUT);
   digitalWrite(heater_indicator_pin_, LOW);
 
@@ -37,11 +37,16 @@ void Thermostat::begin() {
   set_temp_F_ =
       round(measurement_.heat_idx_F / SET_TEMP_STEP_F) * SET_TEMP_STEP_F;
 
+  // Take initial battery measurement.
+  battery_.loop();
+  voltage_ = battery_.voltage();
+
   // Display inital status.
   updateDisplay();
 }
 
 void Thermostat::loop() {
+  battery_.loop();
   button_up_.loop();
   button_dn_.loop();
   buzzer_.loop();
@@ -59,6 +64,10 @@ void Thermostat::loop() {
   }
   if (thermometer_.measurement() != measurement_) {
     measurement_ = thermometer_.measurement();
+    update = true;
+  }
+  if (battery_.voltage() != voltage_) {
+    voltage_ = battery_.voltage();
     update = true;
   }
   if ((heater_on_ && measurement_.heat_idx_F > set_temp_F_ + MAX_TEMP_DIFF_F) ||
@@ -109,5 +118,6 @@ void Thermostat::updateDisplay() {
   status.heat_idx_F = measurement_.heat_idx_F;
   status.max_diff_C = Thermometer::convertDegreeFtoC(MAX_TEMP_DIFF_F);
   status.max_diff_F = MAX_TEMP_DIFF_F;
+  status.battery_V = voltage_;
   display_.displayStatus(status);
 }
