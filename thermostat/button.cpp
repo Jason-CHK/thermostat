@@ -4,7 +4,7 @@
 #define HELD LOW
 #define RELEASED HIGH
 
-Button::Button(pin_size_t pin, uint32_t debounce_ms)
+Button::Button(uint8_t pin, uint32_t debounce_ms)
     : pin_(pin), debounce_ms_(debounce_ms) {}
 
 void Button::begin() {

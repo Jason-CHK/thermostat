@@ -15,7 +15,7 @@ class Button {
    *     should be grounded, as the pin will be pulled up internally.
    * @param debounce_ms Debounce window of the button.
    */
-  Button(pin_size_t pin, uint32_t debounce_ms);
+  Button(uint8_t pin, uint32_t debounce_ms);
 
   /**
    * Call this before calling loop to set up the button.
@@ -36,7 +36,7 @@ class Button {
   bool pressed();
 
  private:
-  pin_size_t pin_;
+  uint8_t pin_;
   uint32_t debounce_ms_;
 
   /**

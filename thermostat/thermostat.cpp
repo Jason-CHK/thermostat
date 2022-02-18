@@ -3,21 +3,25 @@
 #include <math.h>
 
 Thermostat::Thermostat(ThermostatPins pins)
-    : button_up_(pins.button_up, BUTTON_DEBOUNCE_MS),
-      button_dn_(pins.button_dn, BUTTON_DEBOUNCE_MS),
-      thermometer_(pins.thermometer, THERMOMETER_POLL_MS),
-      heater_(pins.heater_remote),
-      display_(),
+    : battery_(pins.battery, BATTERY_VIN_PIN_OHM, BATTERY_PIN_GND_OHM,
+               BATTERY_POLL_INTERVAL_MS),
       buzzer_(pins.buzzer),
-      heater_indicator_pin_(pins.heater_indicator) {}
+      button_up_(pins.button_up, BUTTON_DEBOUNCE_MS),
+      button_dn_(pins.button_dn, BUTTON_DEBOUNCE_MS),
+      display_(),
+      heater_indicator_pin_(pins.heater_indicator),
+      heater_(pins.heater_remote),
+      thermometer_(pins.thermometer, THERMOMETER_POLL_MS) {}
 
 void Thermostat::begin() {
+  battery_.begin();
   button_up_.begin();
   button_dn_.begin();
-  thermometer_.begin();
-  heater_.begin();
-  display_.begin();
   buzzer_.begin();
+  display_.begin();
+  heater_.begin();
+  thermometer_.begin();
+  
   pinMode(heater_indicator_pin_, OUTPUT);
   digitalWrite(heater_indicator_pin_, LOW);
 

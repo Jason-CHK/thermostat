@@ -1,6 +1,6 @@
 #include "buzzer.h"
 
-Buzzer::Buzzer(pin_size_t pin) : pin_(pin) {}
+Buzzer::Buzzer(uint8_t pin) : pin_(pin) {}
 
 void Buzzer::begin() {
   pinMode(pin_, OUTPUT);

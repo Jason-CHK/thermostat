@@ -2,7 +2,7 @@
 
 #define THERMOMETER_TYPE DHT11
 
-Thermometer::Thermometer(pin_size_t pin, uint32_t poll_interval_ms)
+Thermometer::Thermometer(uint8_t pin, uint32_t poll_interval_ms)
     : dht_(pin, THERMOMETER_TYPE),
       poll_interval_ms_(poll_interval_ms),
       last_poll_millis_(0) {
@@ -12,7 +12,10 @@ Thermometer::Thermometer(pin_size_t pin, uint32_t poll_interval_ms)
 void Thermometer::begin() { dht_.begin(); }
 
 void Thermometer::loop() {
-  if (millis() < last_poll_millis_ + poll_interval_ms_) return;
+  if (last_poll_millis_ != 0 &&
+      millis() - last_poll_millis_ < poll_interval_ms_) {
+    return;
+  }
   measure();
   last_poll_millis_ = millis();
 }

@@ -23,7 +23,7 @@ class Thermometer {
 
     /**
      * Compare to another Measurement by comparing all fields.
-     * 
+     *
      * Note: This comparison does not consider float point errors.
      */
     bool operator==(const Measurement& o) const;
@@ -34,9 +34,10 @@ class Thermometer {
    * Construct a new Thermometer object.
    *
    * @param pin The pin connecting to the DHT11 sensor.
-   * @param poll_interval_ms Milliseconds between two polls, minimum 2s for DHT11.
+   * @param poll_interval_ms Milliseconds between two polls, minimum 2s for
+   *     DHT11.
    */
-  Thermometer(pin_size_t pin, uint32_t poll_interval_ms);
+  Thermometer(uint8_t pin, uint32_t poll_interval_ms);
 
   /**
    * Call this before calling loop to set up the thermometer.

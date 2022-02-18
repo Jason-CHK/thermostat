@@ -7,7 +7,7 @@
 #define HEATER_CMD 0xC
 #define HEATER_REPEATS 5
 
-Heater::Heater(pin_size_t pin) : pin_(pin) {}
+Heater::Heater(uint8_t pin) : pin_(pin) {}
 
 void Heater::begin() {
   IrSender.begin(pin_, DISABLE_LED_FEEDBACK);

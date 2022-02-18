@@ -18,7 +18,7 @@ class Buzzer {
    * @param pin Pin connecting to the positive pin of the buzzer. Must be a PWM
    *     pin.
    */
-  Buzzer(pin_size_t pin);
+  Buzzer(uint8_t pin);
 
   /**
    * Call this at setup to enable the buzzer pin.
@@ -39,7 +39,7 @@ class Buzzer {
   void set_time(uint32_t duration_ms);
 
  private:
-  pin_size_t pin_;
+  uint8_t pin_;
 
   /**
    * Time to turn off the buzzer.

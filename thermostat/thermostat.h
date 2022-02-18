@@ -1,6 +1,7 @@
 #ifndef THERMOSTAT_H
 #define THERMOSTAT_H
 
+#include "battery.h"
 #include "button.h"
 #include "buzzer.h"
 #include "display.h"
@@ -25,6 +26,21 @@
 #define SET_TEMP_STEP_F 0.5
 
 /**
+ * Battery voltage doesn't change quickly.
+ */
+#define BATTERY_POLL_INTERVAL_MS 5000
+
+/**
+ * 10k resistor between Vin and battery pin.
+ */
+#define BATTERY_VIN_PIN_OHM 10000
+
+/**
+ * 5.1k resistor between battery pin and ground.
+ */
+#define BATTERY_PIN_GND_OHM 5100
+
+/**
  * Debounce detection window for buttons. The lower this is, the more responsive
  * it will be when setting temperature (especially when repetitively pressing
  * buttons). However it's easier for button to bounce if this is too small.
@@ -39,12 +55,13 @@
 class Thermostat {
  public:
   typedef struct Pins {
-    pin_size_t button_up;
-    pin_size_t button_dn;
-    pin_size_t thermometer;
-    pin_size_t heater_remote;
-    pin_size_t buzzer;  // Must be PWM pin.
-    pin_size_t heater_indicator;
+    uint8_t battery;  // Must be an analog pin.
+    uint8_t button_up;
+    uint8_t button_dn;
+    uint8_t buzzer;  // Must be a PWM pin.
+    uint8_t heater_indicator;
+    uint8_t heater_remote;
+    uint8_t thermometer;
   } ThermostatPins;
 
   Thermostat(ThermostatPins pins);
@@ -60,13 +77,15 @@ class Thermostat {
   float set_temp_F_;
   Thermometer::Measurement measurement_;
 
+  Battery battery_;
   Button button_up_;
   Button button_dn_;
-  Thermometer thermometer_;
-  Heater heater_;
-  Display display_;
   Buzzer buzzer_;
-  pin_size_t heater_indicator_pin_;
+  Display display_;
+  Heater heater_;
+  Thermometer thermometer_;
+
+  uint8_t heater_indicator_pin_;
 };
 
 #endif /* THERMOSTAT_H */

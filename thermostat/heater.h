@@ -13,7 +13,7 @@ class Heater {
    *
    * @param pin Pin connecting to the IR emitter.
    */
-  Heater(pin_size_t pin);
+  Heater(uint8_t pin);
 
   /**
    * Call this before calling switchPower.
@@ -27,7 +27,7 @@ class Heater {
   void toggle();
 
  private:
-  pin_size_t pin_;
+  uint8_t pin_;
 };
 
 #endif /* HEATER_H */
