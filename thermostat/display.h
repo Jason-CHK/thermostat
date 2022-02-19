@@ -64,7 +64,7 @@ class Display {
    * -----------------------
    * |Heater:           off|
    * |Room temp:30.5C/60.0F|
-   * |Humidity:      20.00%|  blue zone
+   * |Humidity:         20%|  blue zone
    * |Max diff:   1.0C/1.0F|
    * |Battery:        4.96V|
    * |                     |

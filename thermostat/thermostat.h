@@ -4,6 +4,7 @@
 #include "battery.h"
 #include "button.h"
 #include "buzzer.h"
+#include "cloud.h"
 #include "display.h"
 #include "heater.h"
 #include "thermometer.h"
@@ -52,6 +53,11 @@
  */
 #define BUZZER_ON_MS 300
 
+/**
+ * How long to wait between two cloud updates.
+ */
+#define CLOUD_UPDATE_INTERVAL_MS 500
+
 class Thermostat {
  public:
   typedef struct Pins {
@@ -71,6 +77,16 @@ class Thermostat {
  private:
   void initHeater();
   void updateDisplay();
+  inline Cloud::WriteVars loop_cloud() {
+    return cloud_.loop(Cloud::ReadVars{.heater_on = heater_on_,
+                                       .set_temp_F = set_temp_F_,
+                                       .humidity = measurement_.humidity,
+                                       .temp_C = measurement_.temp_C,
+                                       .temp_F = measurement_.temp_F,
+                                       .heat_idx_C = measurement_.heat_idx_C,
+                                       .heat_idx_F = measurement_.heat_idx_F,
+                                       .voltage = voltage_});
+  }
 
   // Thermostat state.
   bool heater_on_;
@@ -82,6 +98,7 @@ class Thermostat {
   Button button_up_;
   Button button_dn_;
   Buzzer buzzer_;
+  Cloud cloud_;
   Display display_;
   Heater heater_;
   Thermometer thermometer_;

@@ -1,5 +1,7 @@
 #include "thermometer.h"
 
+#include "util.h"
+
 #define THERMOMETER_TYPE DHT11
 
 Thermometer::Thermometer(uint8_t pin, uint32_t poll_interval_ms)
@@ -31,12 +33,14 @@ void Thermometer::measure() {
     return;
   }
 
-  measurement_.humidity = humidity;
-  measurement_.temp_F = tempF;
+  measurement_.humidity = round_float(humidity, HUMIDITY_PCT_UNIT);
+  measurement_.temp_F = round_float(tempF, TEMPERATURE_UNIT);
   measurement_.heat_idx_F =
-      dht_.computeHeatIndex(tempF, humidity, true /*isFahrenheit*/);
-  measurement_.temp_C = convertTempFtoC(tempF);
-  measurement_.heat_idx_C = convertTempFtoC(measurement_.heat_idx_F);
+      round_float(dht_.computeHeatIndex(tempF, humidity, true /*isFahrenheit*/),
+                  TEMPERATURE_UNIT);
+  measurement_.temp_C = round_float(convertTempFtoC(tempF), TEMPERATURE_UNIT);
+  measurement_.heat_idx_C =
+      round_float(convertTempFtoC(measurement_.heat_idx_F), TEMPERATURE_UNIT);
   measurement_.valid = true;
 }
 

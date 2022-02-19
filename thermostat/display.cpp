@@ -80,7 +80,7 @@ void Display::displayStatus(Status status) {
   x = 0;
   y += OLED_TEXT_1_HEIGHT;
   placeText(x, y, "Humidity:");
-  String humidityStr = String(status.humidity_pct, 2);
+  String humidityStr = String(status.humidity_pct, 0);
   x = OLED_WIDTH - OLED_TEXT_1_WIDTH * (humidityStr.length() + 1);
   placeText(x, y, humidityStr);
   placeText(x, y, "%");

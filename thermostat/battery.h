@@ -3,17 +3,27 @@
 
 #include "Arduino.h"
 
-// Exponential smoothing factor. Should fall in range (0, 1].
-//
-// 1 - No smoothing
-// 0 - Not changing
+/**
+ * Exponential smoothing factor. Should fall in range (0, 1].
+ *
+ * 1 - No smoothing
+ * 0 - Not changing
+ */
 #define SMOOTHING_FACTOR 0.1
 
-// Define operating voltage based on board type. Add unsupported board types
-// here.
-//
-// Board type can be found in boards.txt, with key xxx.build.board where xxx is
-// the board model.
+/**
+ * Rounding unit for voltage readings. This does not affect precision of the
+ * smoothing process.
+ */
+#define VOLTAGE_UNIT 0.01
+
+/**
+ * Define operating voltage based on board type. Add unsupported board types
+ * here.
+ *
+ * Board type can be found in boards.txt, with key xxx.build.board where xxx is
+ * the board model.
+ */
 #if defined(ARDUINO_AVR_NANO_EVERY)
 #define OPERATING_VOLTAGE 5
 #elif defined(ARDUINO_SAMD_NANO_33_IOT)

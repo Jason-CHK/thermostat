@@ -3,6 +3,12 @@
 
 #include "DHT.h"
 
+// Rounding unit for Celsius and Fahrenheit temperatures.
+#define TEMPERATURE_UNIT 0.1
+
+// Rounding unit for humidity percentage.
+#define HUMIDITY_PCT_UNIT 1
+
 /**
  * Wrapper of the DHT11 sensor library.
  */

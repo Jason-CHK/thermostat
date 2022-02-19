@@ -1,5 +1,7 @@
 #include "battery.h"
 
+#include "util.h"
+
 Battery::Battery(uint8_t pin, int vin_pin_ohm, int pin_gnd_ohm,
                  int poll_interval_ms)
     : pin_(pin),
@@ -9,9 +11,7 @@ Battery::Battery(uint8_t pin, int vin_pin_ohm, int pin_gnd_ohm,
       multiplier_(OPERATING_VOLTAGE * (vin_pin_ohm + pin_gnd_ohm) /
                   pin_gnd_ohm / 1024) {}
 
-void Battery::begin() {
-  pinMode(pin_, INPUT);
-}
+void Battery::begin() { pinMode(pin_, INPUT); }
 
 void Battery::loop() {
   if (last_poll_millis_ != 0 &&
@@ -24,6 +24,4 @@ void Battery::loop() {
   last_poll_millis_ = millis();
 }
 
-float Battery::voltage() {
-  return voltage_;
-}
+float Battery::voltage() { return round_float(voltage_, VOLTAGE_UNIT); }
