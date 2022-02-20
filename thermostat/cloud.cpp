@@ -20,14 +20,14 @@ Cloud::Cloud(int update_interval_ms)
 void Cloud::begin() {
   ArduinoCloud.setThingId(SECRET_THING_ID);
 
-  ArduinoCloud.addProperty(heater_on_, Permission::Read);
+  ArduinoCloud.addProperty(heater_on_, Permission::Read).publishEvery(1);
   ArduinoCloud.addProperty(set_temp_F_, Permission::ReadWrite).publishEvery(1);
-  ArduinoCloud.addProperty(humidity_, Permission::Read);
-  ArduinoCloud.addProperty(temp_C_, Permission::Read);
-  ArduinoCloud.addProperty(temp_F_, Permission::Read);
-  ArduinoCloud.addProperty(heat_idx_C_, Permission::Read);
-  ArduinoCloud.addProperty(heat_idx_F_, Permission::Read);
-  ArduinoCloud.addProperty(voltage_, Permission::Read);
+  ArduinoCloud.addProperty(humidity_, Permission::Read).publishEvery(1);
+  ArduinoCloud.addProperty(temp_C_, Permission::Read).publishEvery(1);
+  ArduinoCloud.addProperty(temp_F_, Permission::Read).publishEvery(1);
+  ArduinoCloud.addProperty(heat_idx_C_, Permission::Read).publishEvery(1);
+  ArduinoCloud.addProperty(heat_idx_F_, Permission::Read).publishEvery(1);
+  ArduinoCloud.addProperty(voltage_, Permission::Read).publishEvery(1);
 
   ArduinoCloud.begin(conn_, /* enable_watchdog */ false);
 
