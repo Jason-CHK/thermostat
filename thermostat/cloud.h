@@ -12,12 +12,21 @@
 #include <ArduinoIoTCloud.h>
 #endif
 
+/**
+ * Wrapper around Arduino IoT Cloud.
+ */
 class Cloud {
  public:
+  /**
+   * Struct to hold all writable variables to modify thermostat state.
+   */
   struct WriteVars {
     float set_temp_F;
   };
 
+  /**
+   * Struct to hold all read only variables to report to cloud.
+   */
   struct ReadVars {
     bool heater_on;
     float set_temp_F;
@@ -30,14 +39,31 @@ class Cloud {
   };
 
 #if !defined(ENABLE_CLOUD)
+  // No-op Cloud class definition.
   inline Cloud(int _) {}
   inline void begin() {}
   inline WriteVars loop(ReadVars vars) {
     return WriteVars{.set_temp_F = vars.set_temp_F};
   }
 #else   // !defined(ENABLE_CLOUD)
+  /**
+   * Construct a new Cloud object.
+   *
+   * @param update_interval_ms Milliseconds between two cloud updates.
+   */
   Cloud(int update_interval_ms);
+
+  /**
+   * Initialize connection to cloud. Block until connected.
+   */
   void begin();
+
+  /**
+   * Call this in the main loop to sync states with cloud.
+   *
+   * @param vars Variables to be reported to cloud.
+   * @return WriteVars Cloud-written variables.
+   */
   WriteVars loop(ReadVars vars);
 
  private:
