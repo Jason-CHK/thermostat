@@ -1,5 +1,7 @@
 #include "cloud.h"
 
+#if defined(ENABLE_CLOUD)
+
 #include "arduino_secrets.h"
 
 Cloud::Cloud(int update_interval_ms)
@@ -19,8 +21,7 @@ void Cloud::begin() {
   ArduinoCloud.setThingId(SECRET_THING_ID);
 
   ArduinoCloud.addProperty(heater_on_, Permission::Read);
-  set_temp_F_prop_ =
-      &ArduinoCloud.addProperty(set_temp_F_, Permission::ReadWrite);
+  ArduinoCloud.addProperty(set_temp_F_, Permission::ReadWrite).publishEvery(1);
   ArduinoCloud.addProperty(humidity_, Permission::Read);
   ArduinoCloud.addProperty(temp_C_, Permission::Read);
   ArduinoCloud.addProperty(temp_F_, Permission::Read);
@@ -38,10 +39,6 @@ void Cloud::begin() {
 }
 
 Cloud::WriteVars Cloud::loop(Cloud::ReadVars vars) {
-  if (set_temp_F_ != vars.set_temp_F) {
-    set_temp_F_prop_->updateLocalTimestamp();
-  }
-
   heater_on_ = vars.heater_on;
   set_temp_F_ = vars.set_temp_F;
   humidity_ = vars.humidity;
@@ -54,8 +51,11 @@ Cloud::WriteVars Cloud::loop(Cloud::ReadVars vars) {
   // Only sync to cloud after update interval since last update.
   if (last_update_millis_ == 0 ||
       millis() - last_update_millis_ >= update_interval_ms_) {
+    ArduinoCloud.update();
     last_update_millis_ = millis();
   }
 
   return Cloud::WriteVars{.set_temp_F = set_temp_F_};
 }
+
+#endif  // defined(ENABLE_CLOUD)

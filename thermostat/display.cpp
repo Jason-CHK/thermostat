@@ -17,6 +17,16 @@ void Display::begin() {
   display_.display();
 }
 
+void Display::displayInit() {
+  display_.clearDisplay();
+  display_.setTextSize(2);
+
+  display_.setCursor(4, 24);
+  display_.println("Starting..");
+
+  display_.display();
+}
+
 void Display::displaySetup() {
   display_.clearDisplay();
   display_.setTextSize(2);

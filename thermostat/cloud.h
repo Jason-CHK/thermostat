@@ -1,9 +1,16 @@
 #ifndef CLOUD_H
 #define CLOUD_H
 
-#include <ArduinoIoTCloud.h>
+/**
+ * To enable cloud integration on other boards, add the board model here.
+ */
+#if defined(ARDUINO_SAMD_NANO_33_IOT)
+#define ENABLE_CLOUD
+#endif
 
-#include "thermometer.h"
+#if defined(ENABLE_CLOUD)
+#include <ArduinoIoTCloud.h>
+#endif
 
 class Cloud {
  public:
@@ -22,11 +29,16 @@ class Cloud {
     float voltage;
   };
 
+#if !defined(ENABLE_CLOUD)
+  inline Cloud(int _) {}
+  inline void begin() {}
+  inline WriteVars loop(ReadVars vars) {
+    return WriteVars{.set_temp_F = vars.set_temp_F};
+  }
+#else   // !defined(ENABLE_CLOUD)
   Cloud(int update_interval_ms);
   void begin();
   WriteVars loop(ReadVars vars);
-
-  void update();
 
  private:
   WiFiConnectionHandler conn_;
@@ -46,6 +58,7 @@ class Cloud {
 
   // Read-write property references for time syncs.
   Property* set_temp_F_prop_;
+#endif  // !defined(ENABLE_CLOUD)
 };
 
 #endif /* CLOUD_H */

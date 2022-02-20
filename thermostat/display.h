@@ -43,6 +43,17 @@ class Display {
   void begin();
 
   /**
+   * Display the loading screen. Font size is 2.
+   *
+   * ----------------
+   * |              |
+   * |  Starting..  |
+   * |              |
+   * ----------------
+   */
+  void displayInit();
+
+  /**
    * Display the screen asking user the current heater status. Font size is 2.
    *
    * ----------------

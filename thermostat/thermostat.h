@@ -77,6 +77,8 @@ class Thermostat {
  private:
   void initHeater();
   void updateDisplay();
+
+  // Helper function to sync states to cloud.
   inline Cloud::WriteVars loop_cloud() {
     return cloud_.loop(Cloud::ReadVars{.heater_on = heater_on_,
                                        .set_temp_F = set_temp_F_,

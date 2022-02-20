@@ -15,6 +15,9 @@ Thermostat::Thermostat(ThermostatPins pins)
       thermometer_(pins.thermometer, THERMOMETER_POLL_MS) {}
 
 void Thermostat::begin() {
+  display_.begin();
+  display_.displayInit();
+
   battery_.begin();
   button_up_.begin();
   button_dn_.begin();
