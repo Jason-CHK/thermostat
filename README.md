@@ -1,12 +1,12 @@
 # Thermostat
 
-An Arduino-based thermostat using IR remote to control a heater.
+A cloud-capable Arduino thermostat using IR remote to control a heater.
 
 ![](docs/photo.jpg)
 
 ## Parts
 
-* Arduino Nano Every (ATMega4809)
+* Arduino Nano Every (non-cloud) / Arduino Nano 33 IoT (cloud-capable)
 * UCTRONICS 0.96 Inch OLED Module, 128x64, I2C
 * Adafruit DHT11 temperature & humidity sensor
 * IR LED as heater remote
